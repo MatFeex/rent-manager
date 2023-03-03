@@ -26,9 +26,7 @@ public class Client {
         this.last_name = lastName;
     }
 
-    public Client(){
-
-    }
+    public Client(){}
 
 
 

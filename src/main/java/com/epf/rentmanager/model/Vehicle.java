@@ -4,26 +4,27 @@ import java.time.LocalDate;
 
 public class Vehicle {
 
-    private int nbPlaces;
+    private int seats;
     private String constructor;
     private int id;
     private LocalDate start;
     private LocalDate end;
 
-    public Vehicle(int id, String constructor, int nbPlaces) {
+
+    public Vehicle(int id, String constructor, int seats) {
         this.id = id;
         this.constructor = constructor;
-        this.nbPlaces = nbPlaces;
+        this.seats = seats;
     }
 
     public Vehicle(){}
 
-    public int getNbPlaces() {
-        return nbPlaces;
+    public int getSeats() {
+        return seats;
     }
 
-    public void setNbPlaces(int nbPlaces) {
-        this.nbPlaces = nbPlaces;
+    public void setSeats(int seats) {
+        this.seats = seats;
     }
 
     public String getConstructor() {

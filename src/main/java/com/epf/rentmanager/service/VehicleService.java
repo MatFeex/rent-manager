@@ -1,5 +1,6 @@
 package com.epf.rentmanager.service;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import com.epf.rentmanager.exception.DaoException;
@@ -24,21 +25,44 @@ public class VehicleService {
 		}
 		return instance;
 	}
-	
-	
-//	public long create(Vehicle vehicle) throws ServiceException {
-//		// TODO: créer un véhicule
-//
-//	}
-//
-//	public Vehicle findById(long id) throws ServiceException, DaoException {
-//		// TODO: récupérer un véhicule par son id
-//		return findById(id);
-//	}
-//
-//	public List<Vehicle> findAll() throws ServiceException {
-//		// TODO: récupérer tous les clients
-//		return null;
-//	}
+
+	public long create(Vehicle vehicle) throws ServiceException {
+		try {
+			return VehicleDao.getInstance().create(vehicle);
+		} catch (DaoException e) {
+			e.printStackTrace();
+			throw new ServiceException();
+		}
+	}
+
+	public Vehicle findById(long id) throws ServiceException {
+		try {
+			return VehicleDao.getInstance().findById(id);
+		} catch (DaoException e) {
+			e.printStackTrace();
+			throw new ServiceException();
+		}
+	}
+
+	public List<Vehicle> findAll() throws ServiceException {
+		try{
+			return VehicleDao.getInstance().findAll();
+		}
+		catch (DaoException e) {
+			e.printStackTrace();
+			throw new ServiceException();
+		}
+
+	}
+
+	public int getCount() throws ServiceException {
+		try{
+			return ClientDao.getInstance().getCount();
+		}
+		catch (DaoException e) {
+			e.printStackTrace();
+			throw new ServiceException();
+		}
+	}
 	
 }

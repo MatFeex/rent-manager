@@ -31,17 +31,15 @@
                                     <th>Marque</th>
                                     <th>Modele</th>
                                     <th>Nombre de places</th>
-                                    <!--<th>Propriétaire</th>-->
                                     <th>Action</th>
                                 </tr>
-                                <tr>
 
                                 <c:forEach items="${vehicles}" var="vehicle">
+                                <tr>
                                     <td>${vehicle.id}.</td>
-                                    <td>${vehicle.constructeur}</td>
-                                    <td>${vehicle.modele}</td>
+                                    <td>${vehicle.constructor}</td>
+                                    <td></td>
                                     <td>${vehicle.seats}</td>
-                                    <!--<td>John Doe</td>-->
                                     <td>
                                         <a class="btn btn-primary disabled" href="car-detail.html">
                                             <i class="fa fa-play"></i>
@@ -55,6 +53,7 @@
                                     </td>
                                 </tr>
                                 </c:forEach>
+
                             </table>
                         </div>
                         <!-- /.box-body -->

@@ -34,7 +34,7 @@ public class VehicleDao {
 			Connection connection = ConnectionManager.getConnection();
 			PreparedStatement statement = connection.prepareStatement(CREATE_VEHICLE_QUERY, Statement.RETURN_GENERATED_KEYS);
 			statement.setString(1, vehicle.getConstructor());
-			statement.setInt(2, vehicle.getNbPlaces());
+			statement.setInt(2, vehicle.getSeats());
 			int id = statement.executeUpdate();
 			return id;
 
@@ -74,7 +74,6 @@ public class VehicleDao {
 			e.printStackTrace();
 			throw new DaoException();
 		}
-
 	}
 
 
@@ -95,6 +94,21 @@ public class VehicleDao {
 			throw new DaoException();
 		}
 		return vehicles;
+	}
+
+
+	public int getCount() throws DaoException{
+		try{
+			Connection connection = ConnectionManager.getConnection();
+			Statement statement = connection.createStatement();
+			ResultSet rs = statement.executeQuery(COUNT_VEHICLES_QUERY);
+			rs.next();
+			return rs.getInt("nbVehicles");
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			throw new DaoException();
+		}
 	}
 
 

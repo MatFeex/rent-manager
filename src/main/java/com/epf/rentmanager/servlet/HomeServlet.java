@@ -27,14 +27,11 @@ public class HomeServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 
 
-
-
-
 			throws ServletException, IOException {
 				try {
 					request.setAttribute("nbClients", ClientService.getInstance().getCount());
-					//request.setAttribute("nbVehicules", VehicleService.getInstance().findAll().size());
-					// request.setAttribute("nbReservations", ReservationService.getInstance().findAll().size());
+					request.setAttribute("nbVehicules", VehicleService.getInstance().getCount());
+					request.setAttribute("nbReservations", ReservationService.getInstance().getCount());
 				} catch (ServiceException e) {
 					throw new ServletException();
 				}
