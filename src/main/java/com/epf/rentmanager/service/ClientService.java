@@ -14,15 +14,14 @@ public class ClientService {
 	private ClientDao clientDao;
 	public static ClientService instance;
 	
-	private ClientService() throws SQLException {
+	private ClientService() {
 		this.clientDao = ClientDao.getInstance();
 	}
 	
-	public static ClientService getInstance() throws SQLException {
+	public static ClientService getInstance() {
 		if (instance == null) {
 			instance = new ClientService();
 		}
-		
 		return instance;
 	}
 	
@@ -52,8 +51,16 @@ public class ClientService {
 		catch (DaoException e) {
 			e.printStackTrace();
 			throw new ServiceException();
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
+		}
+	}
+
+	public int getCount() throws ServiceException {
+		try{
+			return ClientDao.getInstance().getCount();
+		}
+		catch (DaoException e) {
+			e.printStackTrace();
+			throw new ServiceException();
 		}
 	}
 

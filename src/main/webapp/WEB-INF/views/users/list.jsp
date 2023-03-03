@@ -31,15 +31,19 @@
                                     <th>Nom</th>
                                     <th>Prenom</th>
                                     <th>Email</th>
+                                    <th>Date de naissance</th>
                                     <th>Action</th>
                                 </tr>
+
+                                <c:forEach items="${clients}" var="client">
                                 <tr>
-                                    <td>1.</td>
-                                    <td>John</td>
-                                    <td>Doe</td>
-                                    <td>john.doe@epf.fr</td>
+                                    <td>${client.id}</td>
+                                    <td>${client.name}</td>
+                                    <td>${client.last_name}</td>
+                                    <td>${client.email}</td>
+                                    <td>${client.birthday}</td>
                                     <td>
-                                        <a class="btn btn-primary" href="${pageContext.request.contextPath}/users/details?id=1">
+                                        <a class="btn btn-primary" href="${pageContext.request.contextPath}/users/details?id=${client.id}">
                                         <i class="fa fa-play"></i>
                                         </a>
                                         <a class="btn btn-success disabled" href="#">
@@ -50,24 +54,8 @@
                                         </a>
                                     </td>
                                 </tr>
+                                </c:forEach>
 
-                                <tr>
-                                    <td>2.</td>
-                                    <td>Jane</td>
-                                    <td>Doe</td>
-                                    <td>jane.doe@epf.fr</td>
-                                    <td>
-                                        <a class="btn btn-primary" href="${pageContext.request.contextPath}/users/details?id=2">
-                                            <i class="fa fa-play"></i>
-                                        </a>
-                                        <a class="btn btn-success disabled" href="#">
-                                            <i class="fa fa-edit"></i>
-                                        </a>
-                                        <a class="btn btn-danger disabled" href="#">
-                                            <i class="fa fa-trash"></i>
-                                        </a>
-                                    </td>
-                                </tr>
                             </table>
                         </div>
                         <!-- /.box-body -->
