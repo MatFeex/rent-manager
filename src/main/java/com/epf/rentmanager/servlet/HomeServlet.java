@@ -2,7 +2,7 @@ package com.epf.rentmanager.servlet;
 
 import com.epf.rentmanager.exception.ServiceException;
 import com.epf.rentmanager.service.ClientService;
-import com.epf.rentmanager.service.ReservationService;
+import com.epf.rentmanager.service.RentService;
 import com.epf.rentmanager.service.VehicleService;
 
 import java.io.IOException;
@@ -31,7 +31,7 @@ public class HomeServlet extends HttpServlet {
 				try {
 					request.setAttribute("nbClients", ClientService.getInstance().getCount());
 					request.setAttribute("nbVehicules", VehicleService.getInstance().getCount());
-					request.setAttribute("nbReservations", ReservationService.getInstance().getCount());
+					request.setAttribute("nbReservations", RentService.getInstance().getCount());
 				} catch (ServiceException e) {
 					throw new ServletException();
 				}

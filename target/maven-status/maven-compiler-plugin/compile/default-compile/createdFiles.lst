@@ -1,3 +1,4 @@
 com\epf\rentmanager\servlet\VehicleServlet.class
-com\epf\rentmanager\service\ReservationService.class
+com\epf\rentmanager\servlet\RentServlet.class
 com\epf\rentmanager\servlet\UserServlet.class
+com\epf\rentmanager\service\RentService.class

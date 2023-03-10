@@ -52,7 +52,6 @@ public class ClientDao {
 			return id;
 
 		} catch (SQLException e) {
-			e.printStackTrace();
 			throw new DaoException();
 		}
 	}
@@ -104,10 +103,10 @@ public class ClientDao {
 				String name = rs.getString("prenom");
 				String email = rs.getString("email");
 				LocalDate birthday = rs.getDate("naissance").toLocalDate();
-				System.out.println(name);
 				clients.add(new Client(id,lastName,name,email,birthday));
 			}
 		} catch (SQLException e) {
+			e.printStackTrace();
 			throw new DaoException();
 		}
 		return clients;
