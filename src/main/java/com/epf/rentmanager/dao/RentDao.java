@@ -18,7 +18,6 @@ import com.epf.rentmanager.persistence.ConnectionManager;
 import com.epf.rentmanager.exception.DaoException;
 import com.epf.rentmanager.model.Rent;
 import com.epf.rentmanager.service.ClientService;
-import com.epf.rentmanager.service.RentService;
 import com.epf.rentmanager.service.VehicleService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -38,7 +37,7 @@ public class RentDao {
 	private static final String FIND_RENT_QUERY = String.format("SELECT Reservation.id, Reservation.client_id, vehicle_id, debut, fin, %s, %s FROM Reservation %s WHERE Reservation.id=?;",CLIENT_FIELDS,VEHICLE_FIELDS,INNER_JOIN_TABLES);
 	private static final String FIND_RENTS_QUERY = String.format("SELECT Reservation.id, Reservation.client_id, vehicle_id, debut, fin, %s , %s FROM Reservation %s;",CLIENT_FIELDS,VEHICLE_FIELDS,INNER_JOIN_TABLES);
 	private static final String COUNT_RENTS_QUERY = "SELECT COUNT(id) AS count FROM Reservation;";
-
+	private static final String FIND_VEHICLES_RENTED_BY_CLIENT_QUERY = String.format("SELECT %s FROM Reservation INNER JOIN Vehicle ON Reservation.vehicle_id = Vehicle.id WHERE Reservation.client_id=?;", VEHICLE_FIELDS);
 	public long create(Rent rent) throws DaoException {
 		try{
 			Connection connection = ConnectionManager.getConnection();
@@ -157,6 +156,24 @@ public class RentDao {
 		return rent;
 	}
 
+	public List<Vehicle> findVehiclesRentedByClient(int client_id) throws DaoException {
+		List<Vehicle> clientVehicles = new ArrayList<>();
+		try (
+			Connection connection = ConnectionManager.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(FIND_VEHICLES_RENTED_BY_CLIENT_QUERY)
+		) {
+			preparedStatement.setLong(1, client_id);
+			ResultSet rs = preparedStatement.executeQuery();
+			while (rs.next()) {
+				clientVehicles.add(new Vehicle(rs.getInt("Vehicle.id"), rs.getString("constructeur"),rs.getString("model"), rs.getShort("nb_places")));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DaoException(e);
+		}
+		return clientVehicles;
+	}
+
 	public List<Rent> findAll() throws DaoException {
 		List<Rent> rents = new ArrayList<Rent>();
 		try{
@@ -188,7 +205,7 @@ public class RentDao {
 			Statement statement = connection.createStatement();
 			ResultSet rs = statement.executeQuery(COUNT_RENTS_QUERY);
 			rs.next();
-			return rs.getInt("nbVehicles");
+			return rs.getInt("count");
 		}
 		catch (SQLException e) {
 			throw new DaoException(e.getMessage());

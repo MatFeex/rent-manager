@@ -5,6 +5,7 @@ import com.epf.rentmanager.service.ClientService;
 import com.epf.rentmanager.service.RentService;
 import com.epf.rentmanager.service.VehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 import java.io.IOException;
 
@@ -29,17 +30,20 @@ public class HomeServlet extends HttpServlet {
 	@Autowired
 	RentService rentService;
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+	@Override
+	public void init() throws ServletException {
+		super.init();
+		SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
+	}
 
-
-			throws ServletException, IOException {
-				try {
-					request.setAttribute("nbClients", clientService.getCount());
-					request.setAttribute("nbVehicules", vehicleService.getCount());
-					request.setAttribute("nbReservations", rentService.getCount());
-				} catch (ServiceException e) {
-					throw new ServletException();
-				}
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		try {
+			request.setAttribute("nbClients", clientService.getCount());
+			request.setAttribute("nbVehicules", vehicleService.getCount());
+			request.setAttribute("nbReservations", rentService.getCount());
+		} catch (ServiceException e) {
+			throw new ServletException();
+		}
 		this.getServletContext().getRequestDispatcher("/WEB-INF/views/home.jsp").forward(request, response);
 	}
 

@@ -17,7 +17,7 @@ public class VehicleDao {
 	private static final String DELETE_VEHICLE_QUERY = "DELETE FROM Vehicle WHERE id=?;";
 	private static final String FIND_VEHICLE_QUERY = "SELECT id, constructeur, model, nb_places FROM Vehicle WHERE id=?;";
 	private static final String FIND_VEHICLES_QUERY = "SELECT id, constructeur, model, nb_places FROM Vehicle;";
-	private  static final String COUNT_VEHICLES_QUERY = "SELECT COUNT(*) as nbVehicles FROM Vehicle";
+	private  static final String COUNT_VEHICLES_QUERY = "SELECT COUNT(*) as count FROM Vehicle";
 
 
 	public long create(Vehicle vehicle) throws DaoException {
@@ -114,7 +114,7 @@ public class VehicleDao {
 			Statement statement = connection.createStatement();
 			ResultSet rs = statement.executeQuery(COUNT_VEHICLES_QUERY);
 			rs.next();
-			return rs.getInt("nbVehicles");
+			return rs.getInt("count");
 		}
 		catch (SQLException e) {
 			e.printStackTrace();

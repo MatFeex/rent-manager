@@ -14,25 +14,27 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/cars")
-public class VehicleServlet extends HttpServlet {
-
+@WebServlet("/users/details")
+public class UserDetailsServlet extends HttpServlet {
     @Autowired
-    VehicleService vehicleService;
+    ClientService clientService;
+    @Autowired
+    RentService rentService;
 
     @Override
     public void init() throws ServletException {
         super.init();
         SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
     }
-
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        try{
-            req.setAttribute("vehicles",vehicleService.findAll());
-        }catch (ServiceException e){
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int client_id = Integer.parseInt(request.getParameter("id"));
+        try {
+            request.setAttribute("client", this.clientService.findById(client_id));
+            request.setAttribute("reservations", this.rentService.findResaByClientId(client_id));
+            request.setAttribute("clientVehicles", this.rentService.findVehiclesRentedByClient(client_id));
+        } catch (ServiceException e) {
             e.printStackTrace();
         }
-        this.getServletContext().getRequestDispatcher("/WEB-INF/views/vehicles/list.jsp").forward(req,resp);
+        this.getServletContext().getRequestDispatcher("/WEB-INF/views/users/details.jsp").forward(request, response);
     }
 }

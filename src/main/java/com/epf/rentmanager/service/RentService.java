@@ -94,6 +94,16 @@ public class RentService {
         }
     }
 
+    public List<Vehicle> findVehiclesRentedByClient(int client_id) throws ServiceException {
+        try{
+            return rentDao.findVehiclesRentedByClient(client_id);
+        }
+        catch (DaoException e) {
+            e.printStackTrace();
+            throw new ServiceException();
+        }
+    }
+
     public int getCount() throws ServiceException {
         try{
             return rentDao.getCount();

@@ -1,5 +1,6 @@
 com\epf\rentmanager\servlet\VehicleServlet.class
 com\epf\rentmanager\ui\cli\CLIClient.class
+com\epf\rentmanager\servlet\UserDetailsServlet.class
 com\epf\rentmanager\ui\cli\CLIMenu.class
 com\epf\rentmanager\servlet\RentCreateServlet.class
 com\epf\rentmanager\exception\DaoException.class
@@ -7,14 +8,19 @@ com\epf\rentmanager\exception\ServiceException.class
 com\epf\rentmanager\service\VehicleService.class
 com\epf\rentmanager\ui\cli\CLI.class
 com\epf\rentmanager\persistence\ConnectionManager.class
+com\epf\rentmanager\servlet\VehicleCreateServlet.class
+com\epf\rentmanager\configuration\WebConfiguration.class
 com\epf\rentmanager\dao\RentDao.class
+com\epf\rentmanager\servlet\UserCreateServlet.class
 com\epf\rentmanager\model\Vehicle.class
 com\epf\rentmanager\service\RentService.class
 com\epf\rentmanager\servlet\HomeServlet.class
 com\epf\rentmanager\dao\ClientDao.class
 com\epf\rentmanager\configuration\AppConfiguration.class
 com\epf\rentmanager\servlet\RentServlet.class
+com\epf\rentmanager\servlet\UserUpdateServlet.class
 com\epf\rentmanager\ui\cli\CLIVehicle.class
+com\epf\rentmanager\servlet\VehicleUpdateServlet.class
 com\epf\rentmanager\ui\Test.class
 com\epf\rentmanager\utils\IOUtils.class
 com\epf\rentmanager\persistence\FillDatabase.class
@@ -24,4 +30,5 @@ com\epf\rentmanager\service\ClientService.class
 com\epf\rentmanager\model\Rent.class
 com\epf\rentmanager\ui\cli\CLIRent.class
 com\epf\rentmanager\dao\VehicleDao.class
+com\epf\rentmanager\servlet\UserDeleteServlet.class
 com\epf\rentmanager\model\Client.class
