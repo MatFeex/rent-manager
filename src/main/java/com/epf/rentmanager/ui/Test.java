@@ -1,23 +1,22 @@
 package com.epf.rentmanager.ui;
 
 
+import com.epf.rentmanager.configuration.AppConfiguration;
 import com.epf.rentmanager.model.Client;
 import com.epf.rentmanager.model.Rent;
 import com.epf.rentmanager.service.ClientService;
 import com.epf.rentmanager.service.RentService;
+import com.epf.rentmanager.service.VehicleService;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
-import java.time.LocalDate;
-import java.util.List;
 
 public class Test {
-
     public static void main(String[] args) throws Exception {
         try {
-            List<Rent> rents = RentService.getInstance().findAll();
-            for(Rent rent : rents){rent.toString();}
-            //ClientService.getInstance().create(new Client("Lucky","Luck","mathieu.fresson@epfedu.fr", LocalDate.of(2001, 7, 17)));
-            // RentService.getInstance().create(new Rent(1,1, LocalDate.of(2001, 7, 17),LocalDate.of(2001, 7, 17)));
-
+            ApplicationContext context = new AnnotationConfigApplicationContext(AppConfiguration.class);
+            ClientService clientService = context.getBean(ClientService.class);
+            VehicleService vehicleService = context.getBean(VehicleService.class);
         }catch (Exception e){
             System.out.println(e);
         }

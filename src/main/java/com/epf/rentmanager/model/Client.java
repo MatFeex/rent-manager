@@ -1,6 +1,5 @@
 package com.epf.rentmanager.model;
 
-import java.sql.Timestamp;
 import java.time.LocalDate;
 
 public class Client {
@@ -19,17 +18,7 @@ public class Client {
         this.id = id;
     }
 
-    public Client(String lastName, String name, String email, LocalDate birthday) {
-        this.name = name;
-        this.email = email;
-        this.birthday = birthday;
-        this.last_name = lastName;
-    }
-
     public Client(){}
-
-
-
 
     public String getName() {
         return name;
@@ -73,6 +62,6 @@ public class Client {
 
     @Override
     public String toString() {
-        return "The client's name is " + name;
+        return String.format("Le client %d s'appelle %s %s - né(e) le %s - %s", id, name, last_name, birthday, email);
     }
 }

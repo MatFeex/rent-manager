@@ -15,32 +15,19 @@ import com.epf.rentmanager.exception.ServiceException;
 import com.epf.rentmanager.persistence.ConnectionManager;
 import com.epf.rentmanager.exception.DaoException;
 import com.epf.rentmanager.model.Client;
+import org.springframework.stereotype.Repository;
 
-
+@Repository
 public class ClientDao {
-	
-	private static ClientDao instance = null;
-	private ClientDao() throws SQLException {}
 
-	public static ClientDao getInstance() {
-		try{
-			if(instance == null) {
-				instance = new ClientDao();
-			}
-			return instance;
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
-		}
-
-	}
-	
+	private static final String UPDATE_CLIENT_QUERY = "UPDATE Client SET nom=?, prenom=?, email=?, naissance=? WHERE id=?";
 	private static final String CREATE_CLIENT_QUERY = "INSERT INTO Client(nom, prenom, email, naissance) VALUES(?, ?, ?, ?);";
 	private static final String DELETE_CLIENT_QUERY = "DELETE FROM Client WHERE id=?;";
 	private static final String FIND_CLIENT_QUERY = "SELECT nom, prenom, email, naissance FROM Client WHERE id=?;";
 	private static final String FIND_CLIENTS_QUERY = "SELECT id, nom, prenom, email, naissance FROM Client;";
 	private  static final String COUNT_CLIENTS_QUERY = "SELECT COUNT(*) as nbClients FROM Client";
 
-	public long create(Client client) throws DaoException, SQLException {
+	public long create(Client client) throws DaoException {
 		try{
 			Connection connection = ConnectionManager.getConnection();
 			PreparedStatement statement = connection.prepareStatement(CREATE_CLIENT_QUERY, Statement.RETURN_GENERATED_KEYS);
@@ -50,9 +37,23 @@ public class ClientDao {
 			statement.setDate(4, Date.valueOf(client.getBirthday()));
 			int id = statement.executeUpdate();
 			return id;
-
 		} catch (SQLException e) {
-			throw new DaoException();
+			throw new DaoException("Erreur rencontrée lors de création du client");
+		}
+	}
+
+	public void update(Client client) throws DaoException {
+		try {
+			Connection connection = ConnectionManager.getConnection();
+			PreparedStatement statement = connection.prepareStatement(UPDATE_CLIENT_QUERY);
+			statement.setString(1, client.getLast_name());
+			statement.setString(2, client.getName());
+			statement.setString(3, client.getEmail());
+			statement.setDate(4, Date.valueOf(client.getBirthday()));
+			statement.setLong(5, client.getId());
+			statement.executeUpdate();
+		} catch (SQLException e) {
+			throw new DaoException("Erreur rencontrée lors de la mise à jour du client");
 		}
 	}
 	
@@ -63,14 +64,13 @@ public class ClientDao {
 			statement.setInt(1, client.getId());
 			int id = statement.executeUpdate();
 			return id;
-
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new DaoException();
+			throw new DaoException("Erreur rencontrée lors de la suppression du client");
 		}
 	}
 
-	public Client findById(long id) throws DaoException, SQLException {
+	public Client findById(long id) throws DaoException {
 
 		try{
 			Connection connection = ConnectionManager.getConnection();
@@ -86,7 +86,7 @@ public class ClientDao {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new DaoException();
+			throw new DaoException("Erreur rencontrée lors de la recherche par id du client");
 		}
 	}
 
@@ -107,7 +107,7 @@ public class ClientDao {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new DaoException();
+			throw new DaoException("Erreur rencontrée lors de la récupération de tous les clients");
 		}
 		return clients;
 	}
@@ -122,7 +122,9 @@ public class ClientDao {
 			}
 		catch (SQLException e) {
 			e.printStackTrace();
-			throw new DaoException();
+			throw new DaoException("Erreur rencontrée lors du comptage des clients");
 		}
 	}
+
+
 }

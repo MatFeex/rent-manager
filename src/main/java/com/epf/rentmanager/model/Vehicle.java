@@ -1,19 +1,24 @@
 package com.epf.rentmanager.model;
 
-import java.time.LocalDate;
 
 public class Vehicle {
 
     private int seats;
     private String constructor;
+    private String model;
     private int id;
-    private LocalDate start;
-    private LocalDate end;
 
 
     public Vehicle(int id, String constructor, int seats) {
         this.id = id;
         this.constructor = constructor;
+        this.seats = seats;
+    }
+
+    public Vehicle(int id, String constructor, String model, int seats) {
+        this.id = id;
+        this.constructor = constructor;
+        this.model = model;
         this.seats = seats;
     }
 
@@ -43,19 +48,15 @@ public class Vehicle {
         this.id = id;
     }
 
-    public LocalDate getStart() {
-        return start;
+    public String getModel() {
+        return model;
     }
 
-    public void setStart(LocalDate start) {
-        this.start = start;
+    public void setModel(String model) {
+        this.model = model;
     }
-
-    public LocalDate getEnd() {
-        return end;
-    }
-
-    public void setEnd(LocalDate end) {
-        this.end = end;
+    @Override
+    public String toString() {
+        return String.format("Le véhicule %d - %s %s a %d disponibles",id,constructor,model,seats);
     }
 }

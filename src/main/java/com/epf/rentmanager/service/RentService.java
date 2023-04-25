@@ -5,28 +5,52 @@ import java.util.List;
 import com.epf.rentmanager.dao.RentDao;
 import com.epf.rentmanager.exception.DaoException;
 import com.epf.rentmanager.exception.ServiceException;
+import com.epf.rentmanager.model.Client;
 import com.epf.rentmanager.model.Rent;
+import com.epf.rentmanager.model.Vehicle;
+import org.springframework.stereotype.Service;
 
+@Service
 public class RentService {
 
-    private RentDao reservationDao;
-    public static RentService instance;
-
-    private RentService() {
-        this.reservationDao = RentDao.getInstance();
+    private RentDao rentDao;
+    private RentService(RentDao rentDao) {
+        this.rentDao = rentDao;
     }
 
-    public static RentService getInstance() {
-        if (instance == null) {
-            instance = new RentService();
+    private void validateRentData(Rent rent) throws ServiceException {
+        if (rent.getVehicle() == null) {
+            throw new ServiceException("Aucun vehicule associé à cette reservation");
         }
-        return instance;
+        if (rent.getClient() == null) {
+            throw new ServiceException("Aucun client associé à cette reservation");
+        }
     }
 
-
-    public long create(Rent Reservation) throws ServiceException {
+    public long create(Rent vehicle) throws ServiceException {
+        validateRentData(vehicle);
         try {
-            return RentDao.getInstance().create(Reservation);
+            return this.rentDao.create(vehicle);
+        } catch (DaoException e) {
+            e.printStackTrace();
+            throw new ServiceException();
+        }
+    }
+
+    public void update(Rent vehicle) throws ServiceException {
+        validateRentData(vehicle);
+        try {
+            this.rentDao.update(vehicle);
+        } catch (DaoException e) {
+            e.printStackTrace();
+            throw new ServiceException();
+        }
+    }
+
+    public void delete(Rent vehicle) throws ServiceException {
+        try {
+            validateRentData(vehicle);
+            this.rentDao.delete(vehicle);
         } catch (DaoException e) {
             e.printStackTrace();
             throw new ServiceException();
@@ -35,7 +59,7 @@ public class RentService {
 
     public List<Rent> findResaByClientId(int id) throws ServiceException {
         try {
-            return RentDao.getInstance().findResaByClientId(id);
+            return rentDao.findResaByClientId(id);
         } catch (DaoException e) {
             e.printStackTrace();
             throw new ServiceException();
@@ -44,16 +68,25 @@ public class RentService {
 
     public List<Rent> findResaByVehicleId(int id) throws ServiceException {
         try {
-            return RentDao.getInstance().findResaByVehicleId(id);
+            return rentDao.findResaByVehicleId(id);
         } catch (DaoException e) {
             e.printStackTrace();
             throw new ServiceException();
         }
     }
 
+    public Rent findById(int id) throws ServiceException {
+        try {
+            return rentDao.findById(id);
+        } catch (DaoException e) {
+            e.printStackTrace();
+            throw new ServiceException(e);
+        }
+    }
+
     public List<Rent> findAll() throws ServiceException {
         try{
-            return RentDao.getInstance().findAll();
+            return rentDao.findAll();
         }
         catch (DaoException e) {
             e.printStackTrace();
@@ -63,14 +96,11 @@ public class RentService {
 
     public int getCount() throws ServiceException {
         try{
-            return RentDao.getInstance().getCount();
+            return rentDao.getCount();
         }
         catch (DaoException e) {
             e.printStackTrace();
             throw new ServiceException();
         }
     }
-
-
-
 }

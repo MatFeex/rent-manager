@@ -1,13 +1,20 @@
 package com.epf.rentmanager.exception;
 
-import java.sql.SQLException;
 
-public class DaoException extends Exception{
+public class DaoException extends Exception {
+    public DaoException() {
+        super();
+    }
 
-    public DaoException(SQLException e) {
+    public DaoException(String message) {
+        super(message);
     }
-    public DaoException(String msg) {
-        super(msg);
+
+    public DaoException(String message, Throwable cause) {
+        super(message, cause);
     }
-    public DaoException(){}
+
+    public DaoException(Throwable cause) {
+        super(cause);
+    }
 }

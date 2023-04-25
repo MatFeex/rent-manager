@@ -1,7 +1,10 @@
 package com.epf.rentmanager.servlet;
 
 import com.epf.rentmanager.exception.ServiceException;
+import com.epf.rentmanager.service.ClientService;
 import com.epf.rentmanager.service.RentService;
+import com.epf.rentmanager.service.VehicleService;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,8 +16,8 @@ import java.io.IOException;
 @WebServlet("/rents/create")
 public class RentCreateServlet extends HttpServlet {
 
-    private RentService rentService = RentService.getInstance();
-
+    @Autowired
+    RentService rentService;
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try{

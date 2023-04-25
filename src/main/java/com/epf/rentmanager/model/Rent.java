@@ -9,9 +9,6 @@ import java.time.LocalDate;
 
 public class Rent {
 
-    private String constructor;
-    private String model;
-    private int nb_places;
     private int id;
     private int client_id;
     private int vehicle_id;
@@ -20,6 +17,8 @@ public class Rent {
 
     private Vehicle vehicle;
     private Client client;
+
+    public Rent(){}
 
     public Rent(int id, Vehicle vehicle, Client client, LocalDate start, LocalDate end) {
         this.id = id;
@@ -34,47 +33,6 @@ public class Rent {
         this.client = client;
         this.start = start;
         this.end = end;
-    }
-
-
-    public Rent(int id, int vehicle_id, int client_id, LocalDate start, LocalDate end) {
-        this.id = id;
-        this.vehicle_id = vehicle_id;
-        this.client_id = client_id;
-        this.start = start;
-        this.end = end;
-    }
-
-    public Rent(int vehicle_id, int client_id, LocalDate start, LocalDate end) {
-        this.vehicle_id = vehicle_id;
-        this.client_id = client_id;
-        this.start = start;
-        this.end = end;
-    }
-
-
-    public String getConstructor() {
-        return constructor;
-    }
-
-    public void setConstructor(String constructor) {
-        this.constructor = constructor;
-    }
-
-    public String getModel() {
-        return model;
-    }
-
-    public void setModel(String model) {
-        this.model = model;
-    }
-
-    public int getNb_places() {
-        return nb_places;
-    }
-
-    public void setNb_places(int nb_places) {
-        this.nb_places = nb_places;
     }
 
     public int getId() {
@@ -135,6 +93,6 @@ public class Rent {
 
     @Override
     public String toString() {
-        return "The rent id is " + id;
+        return String.format("Réservation %d pour le client %d (%s %s): %s de chez %s (%d places)",id,client.getId(),client.getName(),client.getLast_name(),vehicle.getModel(),vehicle.getConstructor(), vehicle.getSeats());
     }
 }
