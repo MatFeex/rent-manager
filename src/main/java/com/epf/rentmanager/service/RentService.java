@@ -19,6 +19,9 @@ public class RentService {
     }
 
     private void validateRentData(Rent rent) throws ServiceException {
+        if(rent.getEnd().isBefore(rent.getStart())){
+            throw new ServiceException("La date de fin ne peut être avant celle du début");
+        }
         if (rent.getVehicle() == null) {
             throw new ServiceException("Aucun vehicule associé à cette reservation");
         }
@@ -27,30 +30,30 @@ public class RentService {
         }
     }
 
-    public long create(Rent vehicle) throws ServiceException {
-        validateRentData(vehicle);
+    public long create(Rent rent) throws ServiceException {
+        validateRentData(rent);
         try {
-            return this.rentDao.create(vehicle);
+            return this.rentDao.create(rent);
         } catch (DaoException e) {
             e.printStackTrace();
             throw new ServiceException();
         }
     }
 
-    public void update(Rent vehicle) throws ServiceException {
-        validateRentData(vehicle);
+    public void update(Rent rent) throws ServiceException {
+        validateRentData(rent);
         try {
-            this.rentDao.update(vehicle);
+            this.rentDao.update(rent);
         } catch (DaoException e) {
             e.printStackTrace();
             throw new ServiceException();
         }
     }
 
-    public void delete(Rent vehicle) throws ServiceException {
+    public void delete(Rent rent) throws ServiceException {
         try {
-            validateRentData(vehicle);
-            this.rentDao.delete(vehicle);
+            validateRentData(rent);
+            this.rentDao.delete(rent);
         } catch (DaoException e) {
             e.printStackTrace();
             throw new ServiceException();

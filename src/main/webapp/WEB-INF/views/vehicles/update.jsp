@@ -24,47 +24,31 @@
                 <div class="col-md-12">
                     <!-- Horizontal Form -->
                     <div class="box">
-                        <!-- form start -->
-                        <!-- Le  type de methode http qui sera appel� lors de action submit du formulaire -->
-                        <!-- est d�crit an l'attribut "method" de la balise forme -->
-                        <!-- action indique � quel "cible" sera envoyr la requ�te, ici notre Servlet qui sera bind sur -->
-                        <!-- /vehicles/create -->
-                        <form class="form-horizontal" method="POST" action="/rentmanager/vehicles/create">
+                        <form class="form-horizontal" method="POST" action="/rentmanager/vehicles/update">
                             <div class="box-body">
                                 <div class="form-group">
                                     <label for="manufacturer" class="col-sm-2 control-label">Marque</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="constructor" name="constructor" placeholder="Marque" required>
+                                        <input type="text" class="form-control" id="constructor" name="constructor" value=${vehicle.constructor} required>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="modele" class="col-sm-2 control-label">Modele</label>
 
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="model" name="model" placeholder="Modele" required>
+                                        <input type="text" class="form-control" id="model" name="model" value=${vehicle.model} required>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="seats" class="col-sm-2 control-label">Nombre de places</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="seats" name="seats" placeholder="Nombre de places" required>
+                                        <input type="text" class="form-control" id="seats" name="seats" value=${vehicle.seats} required>
                                     </div>
                                 </div>
-                                <!--
-                                <div class="form-group">
-                                    <label for="owner" class="col-sm-2 control-label">Propriétaire</label>
-                                    <div class="col-sm-10">
-                                        <select class="form-control" id="owner" name="owner">
-                                            <option value="1">John Doe</option>
-                                            <option value="2">Jane Doe</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                -->
                             </div>
                             <!-- /.box-body -->
                             <div class="box-footer">
-                                <button type="submit" class="btn btn-info pull-right">Ajouter</button>
+                                <button type="submit" class="btn btn-info pull-right">Modifier</button>
                             </div>
                             <!-- /.box-footer -->
                         </form>

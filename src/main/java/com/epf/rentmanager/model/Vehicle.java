@@ -8,13 +8,6 @@ public class Vehicle {
     private String model;
     private int id;
 
-
-    public Vehicle(int id, String constructor, int seats) {
-        this.id = id;
-        this.constructor = constructor;
-        this.seats = seats;
-    }
-
     public Vehicle(int id, String constructor, String model, int seats) {
         this.id = id;
         this.constructor = constructor;

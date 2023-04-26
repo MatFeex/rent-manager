@@ -39,17 +39,14 @@
                                 <tr>
                                     <td>${rent.id}.</td>
                                     <td>${rent.vehicle.constructor}</td>
-                                    <td>${rent.client.name}</td>
+                                    <td>${rent.client.name} ${rent.client.last_name}</td>
                                     <td>${rent.start}</td>
                                     <td>${rent.end}</td>
                                     <td>
-                                        <a class="btn btn-primary disabled" href="${pageContext.request.contextPath}/cars?id=1">
-                                            <i class="fa fa-play"></i>
-                                        </a>
-                                        <a class="btn btn-success disabled" href="#">
+                                        <a class="btn btn-success" href="${pageContext.request.contextPath}/rents/update?id=${rent.id}">
                                             <i class="fa fa-edit"></i>
                                         </a>
-                                        <a class="btn btn-danger disabled" href="#">
+                                        <a class="btn btn-danger" href="${pageContext.request.contextPath}/rents/delete?id=${rent.id}">
                                             <i class="fa fa-trash"></i>
                                         </a>
                                     </td>

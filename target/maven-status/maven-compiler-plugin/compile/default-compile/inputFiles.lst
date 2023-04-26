@@ -8,10 +8,13 @@ C:\Users\mathi\Documents\dev\4A\Java\web-project\RentManager2\RentManager2\rentm
 C:\Users\mathi\Documents\dev\4A\Java\web-project\RentManager2\RentManager2\rentmanager\src\main\java\com\epf\rentmanager\persistence\ConnectionManager.java
 C:\Users\mathi\Documents\dev\4A\Java\web-project\RentManager2\RentManager2\rentmanager\src\main\java\com\epf\rentmanager\ui\cli\CLIVehicle.java
 C:\Users\mathi\Documents\dev\4A\Java\web-project\RentManager2\RentManager2\rentmanager\src\main\java\com\epf\rentmanager\service\ClientService.java
+C:\Users\mathi\Documents\dev\4A\Java\web-project\RentManager2\RentManager2\rentmanager\src\main\java\com\epf\rentmanager\servlet\VehicleCreateServlet.java
 C:\Users\mathi\Documents\dev\4A\Java\web-project\RentManager2\RentManager2\rentmanager\src\main\java\com\epf\rentmanager\dao\VehicleDao.java
 C:\Users\mathi\Documents\dev\4A\Java\web-project\RentManager2\RentManager2\rentmanager\src\main\java\com\epf\rentmanager\servlet\UserUpdateServlet.java
 C:\Users\mathi\Documents\dev\4A\Java\web-project\RentManager2\RentManager2\rentmanager\src\main\java\com\epf\rentmanager\servlet\RentServlet.java
 C:\Users\mathi\Documents\dev\4A\Java\web-project\RentManager2\RentManager2\rentmanager\src\main\java\com\epf\rentmanager\persistence\FillDatabase.java
+C:\Users\mathi\Documents\dev\4A\Java\web-project\RentManager2\RentManager2\rentmanager\src\main\java\com\epf\rentmanager\servlet\RentUpdateServlet.java
+C:\Users\mathi\Documents\dev\4A\Java\web-project\RentManager2\RentManager2\rentmanager\src\main\java\com\epf\rentmanager\servlet\VehicleUpdateServlet.java
 C:\Users\mathi\Documents\dev\4A\Java\web-project\RentManager2\RentManager2\rentmanager\src\main\java\com\epf\rentmanager\ui\cli\CLIClient.java
 C:\Users\mathi\Documents\dev\4A\Java\web-project\RentManager2\RentManager2\rentmanager\src\main\java\com\epf\rentmanager\dao\ClientDao.java
 C:\Users\mathi\Documents\dev\4A\Java\web-project\RentManager2\RentManager2\rentmanager\src\main\java\com\epf\rentmanager\servlet\VehicleServlet.java
@@ -26,6 +29,8 @@ C:\Users\mathi\Documents\dev\4A\Java\web-project\RentManager2\RentManager2\rentm
 C:\Users\mathi\Documents\dev\4A\Java\web-project\RentManager2\RentManager2\rentmanager\src\main\java\com\epf\rentmanager\service\VehicleService.java
 C:\Users\mathi\Documents\dev\4A\Java\web-project\RentManager2\RentManager2\rentmanager\src\main\java\com\epf\rentmanager\servlet\RentCreateServlet.java
 C:\Users\mathi\Documents\dev\4A\Java\web-project\RentManager2\RentManager2\rentmanager\src\main\java\com\epf\rentmanager\ui\Test.java
+C:\Users\mathi\Documents\dev\4A\Java\web-project\RentManager2\RentManager2\rentmanager\src\main\java\com\epf\rentmanager\servlet\RentDeleteServlet.java
+C:\Users\mathi\Documents\dev\4A\Java\web-project\RentManager2\RentManager2\rentmanager\src\main\java\com\epf\rentmanager\servlet\VehicleDeleteServlet.java
 C:\Users\mathi\Documents\dev\4A\Java\web-project\RentManager2\RentManager2\rentmanager\src\main\java\com\epf\rentmanager\exception\ServiceException.java
 C:\Users\mathi\Documents\dev\4A\Java\web-project\RentManager2\RentManager2\rentmanager\src\main\java\com\epf\rentmanager\servlet\UserDeleteServlet.java
 C:\Users\mathi\Documents\dev\4A\Java\web-project\RentManager2\RentManager2\rentmanager\src\main\java\com\epf\rentmanager\model\Client.java

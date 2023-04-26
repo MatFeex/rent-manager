@@ -28,13 +28,6 @@ public class Rent {
         this.end = end;
     }
 
-    public Rent(Vehicle vehicle, Client client, LocalDate start, LocalDate end) {
-        this.vehicle = vehicle;
-        this.client = client;
-        this.start = start;
-        this.end = end;
-    }
-
     public int getId() {
         return id;
     }

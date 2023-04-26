@@ -63,6 +63,7 @@ public class RentDao {
 			statement.setObject(2, rent.getClient());
 			statement.setDate(3, Date.valueOf(rent.getStart()));
 			statement.setDate(4, Date.valueOf(rent.getEnd()));
+			statement.setInt(5,rent.getId());
 			statement.executeUpdate();
 		} catch (SQLException e) {
 			throw new DaoException("Erreur rencontrée lors de la mise à jour de la réservation");

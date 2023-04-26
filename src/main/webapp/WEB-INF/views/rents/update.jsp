@@ -14,7 +14,7 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Voitures
+                Reservations
             </h1>
         </section>
 
@@ -25,46 +25,45 @@
                     <!-- Horizontal Form -->
                     <div class="box">
                         <!-- form start -->
-                        <!-- Le  type de methode http qui sera appel� lors de action submit du formulaire -->
-                        <!-- est d�crit an l'attribut "method" de la balise forme -->
-                        <!-- action indique � quel "cible" sera envoyr la requ�te, ici notre Servlet qui sera bind sur -->
-                        <!-- /vehicles/create -->
-                        <form class="form-horizontal" method="POST" action="/rentmanager/vehicles/create">
+                        <form class="form-horizontal" method="post" action="/rentmanager/rents/update">
                             <div class="box-body">
                                 <div class="form-group">
-                                    <label for="manufacturer" class="col-sm-2 control-label">Marque</label>
+                                    <label for="car" class="col-sm-2 control-label">Vehicle</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="constructor" name="constructor" placeholder="Marque" required>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="modele" class="col-sm-2 control-label">Modele</label>
-
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="model" name="model" placeholder="Modele" required>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="seats" class="col-sm-2 control-label">Nombre de places</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="seats" name="seats" placeholder="Nombre de places" required>
-                                    </div>
-                                </div>
-                                <!--
-                                <div class="form-group">
-                                    <label for="owner" class="col-sm-2 control-label">Propriétaire</label>
-                                    <div class="col-sm-10">
-                                        <select class="form-control" id="owner" name="owner">
-                                            <option value="1">John Doe</option>
-                                            <option value="2">Jane Doe</option>
+                                        <select class="form-control" id="vehicle" name="vehicle" required>
+                                            <c:forEach items="${vehicles}" var="vehicle">
+                                                <option value="${vehicle.id}" <c:if test="${rent.vehicle.id == vehicle.id}">SELECTED</c:if> >${vehicle.constructor} ${vehicle.model}</option>
+                                            </c:forEach>
                                         </select>
                                     </div>
                                 </div>
-                                -->
+                                <div class="form-group">
+                                    <label for="client" class="col-sm-2 control-label">Client</label>
+
+                                    <div class="col-sm-10">
+                                        <select class="form-control" id="client" name="client" required>
+                                            <c:forEach items="${clients}" var="client">
+                                                <option value="${client.id}" <c:if test="${rent.client.id == client.id}">SELECTED</c:if> >${client.name} ${client.last_name}</option>
+                                            </c:forEach>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="start" class="col-sm-2 control-label">Date de debut</label>
+                                    <div class="col-sm-10">
+                                        <input type="date" class="form-control" id="start" name="start" value=${rent.start}>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="end" class="col-sm-2 control-label">Date de debut</label>
+                                    <div class="col-sm-10">
+                                        <input type="date" class="form-control" id="end" name="end" value=${rent.end}>
+                                    </div>
+                                </div>
                             </div>
                             <!-- /.box-body -->
                             <div class="box-footer">
-                                <button type="submit" class="btn btn-info pull-right">Ajouter</button>
+                                <button type="submit" class="btn btn-info pull-right">Modifier</button>
                             </div>
                             <!-- /.box-footer -->
                         </form>
@@ -82,5 +81,13 @@
 <!-- ./wrapper -->
 
 <%@ include file="/WEB-INF/views/common/js_imports.jsp" %>
+<script src="${pageContext.request.contextPath}/resources/plugins/input-mask/jquery.inputmask.js"></script>
+<script src="${pageContext.request.contextPath}/resources/plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
+<script src="${pageContext.request.contextPath}/resources/plugins/input-mask/jquery.inputmask.extensions.js"></script>
+<script>
+    $(function () {
+        $('[data-mask]').inputmask()
+    });
+</script>
 </body>
 </html>
