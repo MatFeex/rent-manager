@@ -55,7 +55,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="end" class="col-sm-2 control-label">Date de debut</label>
+                                    <label for="end" class="col-sm-2 control-label">Date de fin</label>
                                     <div class="col-sm-10">
                                         <input type="date" class="form-control" id="end" name="end" placeholder="Fin de reservation">
                                     </div>

@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-import com.epf.rentmanager.exception.ServiceException;
 import com.epf.rentmanager.persistence.ConnectionManager;
 import com.epf.rentmanager.exception.DaoException;
 import com.epf.rentmanager.model.Client;

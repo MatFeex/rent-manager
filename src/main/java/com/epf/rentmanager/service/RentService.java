@@ -1,24 +1,40 @@
 package com.epf.rentmanager.service;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.epf.rentmanager.dao.RentDao;
 import com.epf.rentmanager.exception.DaoException;
 import com.epf.rentmanager.exception.ServiceException;
-import com.epf.rentmanager.model.Client;
+
 import com.epf.rentmanager.model.Rent;
 import com.epf.rentmanager.model.Vehicle;
 import org.springframework.stereotype.Service;
 
 @Service
 public class RentService {
-
+    private static final int MAX_CONSECUTIVE_DAYS = 7;
+    private static final int MAX_TOTAL_DAYS = 30;
     private RentDao rentDao;
     private RentService(RentDao rentDao) {
         this.rentDao = rentDao;
     }
 
     private void validateRentData(Rent rent) throws ServiceException {
+
+        // data
+        List<Rent> rents;
+        try{
+            rents = rentDao.findResaByVehicleId(rent.getVehicle().getId());
+            rents.remove(rent);
+        } catch (DaoException e){
+            throw new ServiceException("Impossible de trouver les autres réservations associées à ce véhicule.");
+        }
+        LocalDate startDate = rent.getStart();
+        LocalDate endDate = rent.getEnd();
+        // -------------
+
         if(rent.getEnd().isBefore(rent.getStart())){
             throw new ServiceException("La date de fin ne peut être avant celle du début");
         }
@@ -28,6 +44,34 @@ public class RentService {
         if (rent.getClient() == null) {
             throw new ServiceException("Aucun client associé à cette reservation");
         }
+        if (isVehicleDoubleBooked(rents, rent.getStart(), rent.getEnd())) {
+            throw new ServiceException("La voiture est déjà réservée pour la période spécifiée");
+        }
+        if (isVehicleReservedConsecutively(rents, startDate, endDate)) {
+            throw new ServiceException("La voiture est réservée pendant plus de 7 jours consécutifs");
+        }
+        if (isVehicleReservedWithoutBreak(rents, startDate, endDate)) {
+            throw new ServiceException("La voiture est réservée pendant plus de 30 jours sans pause");
+        }
+    }
+
+    private boolean doPeriodsOverlap(LocalDate start, LocalDate end) {
+        return !end.isBefore(start) ;
+    }
+    private boolean isVehicleDoubleBooked(List<Rent> rents, LocalDate startDate, LocalDate endDate) {
+        return rents.stream().anyMatch(rent -> doPeriodsOverlap(rent.getStart(), rent.getEnd()));
+    }
+    private boolean isVehicleReservedConsecutively(List<Rent> rents, LocalDate startDate, LocalDate endDate) {
+        long consecutiveDays = startDate.datesUntil(endDate.plusDays(1))
+                .filter(date -> rents.stream().anyMatch(rent -> rent.getStart().compareTo(date) <= 0 && rent.getEnd().compareTo(date) >= 0))
+                .count();
+        return consecutiveDays > MAX_CONSECUTIVE_DAYS;
+    }
+    private boolean isVehicleReservedWithoutBreak(List<Rent> rents, LocalDate startDate, LocalDate endDate) {
+        long reservedDays = startDate.datesUntil(endDate.plusDays(1))
+                .filter(date -> rents.stream().anyMatch(rent -> rent.getStart().compareTo(date) <= 0 && rent.getEnd().compareTo(date) >= 0))
+                .count();
+        return reservedDays > MAX_TOTAL_DAYS;
     }
 
     public long create(Rent rent) throws ServiceException {
@@ -41,7 +85,7 @@ public class RentService {
     }
 
     public void update(Rent rent) throws ServiceException {
-        validateRentData(rent);
+        // validateRentData(rent);
         try {
             this.rentDao.update(rent);
         } catch (DaoException e) {
@@ -52,7 +96,6 @@ public class RentService {
 
     public void delete(Rent rent) throws ServiceException {
         try {
-            validateRentData(rent);
             this.rentDao.delete(rent);
         } catch (DaoException e) {
             e.printStackTrace();

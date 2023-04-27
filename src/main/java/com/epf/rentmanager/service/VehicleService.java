@@ -1,9 +1,13 @@
 package com.epf.rentmanager.service;
 
 
+import java.time.LocalDate;
 import java.util.List;
+
+import com.epf.rentmanager.dao.RentDao;
 import com.epf.rentmanager.exception.DaoException;
 import com.epf.rentmanager.exception.ServiceException;
+import com.epf.rentmanager.model.Rent;
 import com.epf.rentmanager.model.Vehicle;
 import com.epf.rentmanager.dao.VehicleDao;
 import org.springframework.stereotype.Service;
@@ -12,19 +16,22 @@ import org.springframework.stereotype.Service;
 @Service
 public class VehicleService {
 
+	private static final int MIN_SEATS = 2;
+	private static final int MAX_SEATS = 9;
 	private VehicleDao vehicleDao;
+	private RentDao rentDao;
 	private VehicleService(VehicleDao vehicleDao) {
 		this.vehicleDao = vehicleDao;
 	}
 
-	private void validateVehicleData(Vehicle vehicle) throws ServiceException {
+	public void validateVehicleData(Vehicle vehicle) throws ServiceException {
 		if (vehicle.getConstructor().isEmpty()) {
 			throw new ServiceException("Invalid manufacturer");
 		}
 		if (vehicle.getModel().isEmpty()) {
 			throw new ServiceException("Invalid model");
 		}
-		if (vehicle.getSeats() <= 1) {
+		if (vehicle.getSeats() < MIN_SEATS || vehicle.getSeats() > MAX_SEATS) {
 			throw new ServiceException("Invalid number of seats");
 		}
 	}
@@ -40,7 +47,7 @@ public class VehicleService {
 	}
 
 	public void update(Vehicle vehicle) throws ServiceException {
-		validateVehicleData(vehicle);
+		// validateVehicleData(vehicle);
 		try {
 			this.vehicleDao.update(vehicle);
 		} catch (DaoException e) {
@@ -51,7 +58,6 @@ public class VehicleService {
 
 	public void delete(Vehicle vehicle) throws ServiceException {
 		try {
-			validateVehicleData(vehicle);
 			this.vehicleDao.delete(vehicle);
 		} catch (DaoException e) {
 			e.printStackTrace();

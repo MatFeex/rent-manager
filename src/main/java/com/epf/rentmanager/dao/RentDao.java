@@ -51,7 +51,7 @@ public class RentDao {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new DaoException();
+			throw new DaoException("Erreur rencontrée lors de la création de la réservation");
 		}
 	}
 
@@ -59,14 +59,15 @@ public class RentDao {
 		try {
 			Connection connection = ConnectionManager.getConnection();
 			PreparedStatement statement = connection.prepareStatement(UPDATE_RENT_QUERY);
-			statement.setObject(1, rent.getVehicle());
-			statement.setObject(2, rent.getClient());
+			statement.setInt(1, rent.getClient().getId());
+			statement.setInt(2, rent.getVehicle().getId());
 			statement.setDate(3, Date.valueOf(rent.getStart()));
 			statement.setDate(4, Date.valueOf(rent.getEnd()));
 			statement.setInt(5,rent.getId());
 			statement.executeUpdate();
 		} catch (SQLException e) {
-			throw new DaoException("Erreur rencontrée lors de la mise à jour de la réservation");
+			e.printStackTrace();
+			// throw new DaoException("Erreur rencontrée lors de la mise à jour de la réservation");
 		}
 	}
 	
