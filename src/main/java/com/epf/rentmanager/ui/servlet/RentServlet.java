@@ -1,4 +1,4 @@
-package com.epf.rentmanager.servlet;
+package com.epf.rentmanager.ui.servlet;
 
 import com.epf.rentmanager.exception.ServiceException;
 import com.epf.rentmanager.service.ClientService;
@@ -14,25 +14,24 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/vehicles")
-public class VehicleServlet extends HttpServlet {
+@WebServlet("/rents")
+public class RentServlet extends HttpServlet {
 
     @Autowired
-    VehicleService vehicleService;
+    RentService rentService;
 
     @Override
     public void init() throws ServletException {
         super.init();
         SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
     }
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try{
-            req.setAttribute("vehicles",vehicleService.findAll());
+            req.setAttribute("rents",this.rentService.findAll());
         }catch (ServiceException e){
             e.printStackTrace();
         }
-        this.getServletContext().getRequestDispatcher("/WEB-INF/views/vehicles/list.jsp").forward(req,resp);
+        this.getServletContext().getRequestDispatcher("/WEB-INF/views/rents/list.jsp").forward(req,resp);
     }
 }

@@ -24,6 +24,8 @@ public class ClientDao {
 	private static final String FIND_CLIENT_QUERY = "SELECT nom, prenom, email, naissance FROM Client WHERE id=?;";
 	private static final String FIND_CLIENTS_QUERY = "SELECT id, nom, prenom, email, naissance FROM Client;";
 	private  static final String COUNT_CLIENTS_QUERY = "SELECT COUNT(*) as count FROM Client";
+	private  static final String UNIQUE_EMAIL_QUERY = "SELECT COUNT(*) FROM Client WHERE email = ?";
+
 
 	public long create(Client client) throws DaoException {
 		try{
@@ -110,6 +112,24 @@ public class ClientDao {
 		return clients;
 	}
 
+	public boolean emailExists(String email, int email_count) throws DaoException {
+		try {
+			Connection connection = ConnectionManager.getConnection();
+			PreparedStatement statement = connection.prepareStatement(UNIQUE_EMAIL_QUERY);
+			statement.setString(1, email);
+			ResultSet resultSet = statement.executeQuery();
+			if (resultSet.next()) {
+				int count = resultSet.getInt(1);
+				return count > email_count;
+			}
+		} catch (SQLException e) {
+			throw new DaoException("Une erreur s'est produite lors de la vérification de l'unicité de l'email du client", e);
+		}
+
+		return false;
+	}
+
+
 	public int getCount() throws DaoException{
 		try{
 			Connection connection = ConnectionManager.getConnection();
@@ -123,6 +143,4 @@ public class ClientDao {
 			throw new DaoException("Erreur rencontrée lors du comptage des clients");
 		}
 	}
-
-
 }

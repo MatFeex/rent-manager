@@ -38,6 +38,7 @@ public class RentDao {
 	private static final String FIND_RENTS_QUERY = String.format("SELECT Reservation.id, Reservation.client_id, vehicle_id, debut, fin, %s , %s FROM Reservation %s;",CLIENT_FIELDS,VEHICLE_FIELDS,INNER_JOIN_TABLES);
 	private static final String COUNT_RENTS_QUERY = "SELECT COUNT(id) AS count FROM Reservation;";
 	private static final String FIND_VEHICLES_RENTED_BY_CLIENT_QUERY = String.format("SELECT %s FROM Reservation INNER JOIN Vehicle ON Reservation.vehicle_id = Vehicle.id WHERE Reservation.client_id=?;", VEHICLE_FIELDS);
+
 	public long create(Rent rent) throws DaoException {
 		try{
 			Connection connection = ConnectionManager.getConnection();
@@ -221,6 +222,4 @@ public class RentDao {
 				context.getBean(VehicleService.class),
 		};
 	}
-
-
 }

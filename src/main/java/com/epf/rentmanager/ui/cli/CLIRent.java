@@ -1,8 +1,6 @@
 package com.epf.rentmanager.ui.cli;
 
-import com.epf.rentmanager.exception.DaoException;
 import com.epf.rentmanager.exception.ServiceException;
-import com.epf.rentmanager.exception.ValidationException;
 import com.epf.rentmanager.model.Rent;
 import com.epf.rentmanager.service.RentService;
 import com.epf.rentmanager.utils.IOUtils;

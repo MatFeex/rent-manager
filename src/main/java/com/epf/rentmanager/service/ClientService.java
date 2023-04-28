@@ -1,6 +1,5 @@
 package com.epf.rentmanager.service;
 
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.List;
@@ -11,19 +10,20 @@ import com.epf.rentmanager.exception.DaoException;
 import com.epf.rentmanager.exception.ServiceException;
 import com.epf.rentmanager.model.Client;
 import com.epf.rentmanager.model.Rent;
-import com.epf.rentmanager.model.Vehicle;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ClientService {
 	private static final int MINIMUN_CLIENT_AGE = 18;
 	private ClientDao clientDao;
-	private ClientService(ClientDao clientDao){this.clientDao = clientDao;}
-	private boolean emailExists(String email) throws DaoException {
-		List<Client> clients = clientDao.findAll();
-		return clients.stream().anyMatch(client -> client.getEmail().equals(email));
+	private RentDao rentDao;
+
+	private ClientService(ClientDao clientDao, RentDao rentDao){
+		this.clientDao = clientDao;
+		this.rentDao = rentDao;
 	}
-	private Client validateClientData(Client client) throws ServiceException, DaoException {
+
+	private Client validateClientData(Client client, int email_count) throws ServiceException, DaoException {
 		String lastName = client.getLast_name();
 		String firstName = client.getName();
 		int age = Period.between(client.getBirthday(), LocalDate.now()).getYears();;
@@ -38,7 +38,7 @@ public class ClientService {
 		if (age < MINIMUN_CLIENT_AGE) {
 			throw new ServiceException(String.format("Le client doit avoir au moins %d ans.",MINIMUN_CLIENT_AGE));
 		}
-		if (emailExists(email)) {
+		if (clientDao.emailExists(email, email_count)) {
 			throw new ServiceException("Cette adresse e-mail est déjà prise.");
 		}
 		client.setLast_name(lastName.toUpperCase());
@@ -47,7 +47,7 @@ public class ClientService {
 
 	public long create(Client client) throws ServiceException {
 		try {
-			client = validateClientData(client);
+			client = validateClientData(client, 0);
 			return this.clientDao.create(client);
 		} catch (DaoException e) {
 			e.printStackTrace();
@@ -57,7 +57,7 @@ public class ClientService {
 
 	public void update(Client client) throws ServiceException {
 		try {
-			// client = validateClientData(client);
+			client = validateClientData(client,1);
 			this.clientDao.update(client);
 		} catch (DaoException e) {
 			e.printStackTrace();
@@ -67,6 +67,9 @@ public class ClientService {
 
 	public void delete(Client client) throws ServiceException {
 		try {
+			for(Rent rent : rentDao.findResaByClientId(client.getId())){
+				rentDao.delete(rent);
+			}
 			clientDao.delete(client);
 		} catch (DaoException e) {
 			e.printStackTrace();

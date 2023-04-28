@@ -1,7 +1,8 @@
-package com.epf.rentmanager.servlet;
+package com.epf.rentmanager.ui.servlet;
 
 import com.epf.rentmanager.exception.ServiceException;
-import com.epf.rentmanager.service.ClientService;
+import com.epf.rentmanager.service.RentService;
+import com.epf.rentmanager.service.VehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
@@ -12,10 +13,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/users/delete")
-public class UserDeleteServlet extends HttpServlet {
+@WebServlet("/rents/delete")
+public class RentDeleteServlet extends HttpServlet {
     @Autowired
-    ClientService clientService;
+    RentService rentService;
     @Override
     public void init() throws ServletException {
         super.init();
@@ -24,10 +25,10 @@ public class UserDeleteServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
-            clientService.delete(clientService.findById(Integer.parseInt(request.getParameter("id"))));
+            rentService.delete(rentService.findById(Integer.parseInt(request.getParameter("id"))));
         } catch (ServiceException e) {
             e.printStackTrace();
         }
-        response.sendRedirect("/rentmanager/users");
+        response.sendRedirect("/rentmanager/rents");
     }
 }

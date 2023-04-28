@@ -19,7 +19,6 @@ public class VehicleDao {
 	private static final String FIND_VEHICLES_QUERY = "SELECT id, constructeur, model, nb_places FROM Vehicle;";
 	private  static final String COUNT_VEHICLES_QUERY = "SELECT COUNT(*) as count FROM Vehicle";
 
-
 	public long create(Vehicle vehicle) throws DaoException {
 		try{
 			Connection connection = ConnectionManager.getConnection();
@@ -121,6 +120,4 @@ public class VehicleDao {
 			throw new DaoException();
 		}
 	}
-
-
 }

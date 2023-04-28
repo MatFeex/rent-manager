@@ -20,8 +20,9 @@ public class VehicleService {
 	private static final int MAX_SEATS = 9;
 	private VehicleDao vehicleDao;
 	private RentDao rentDao;
-	private VehicleService(VehicleDao vehicleDao) {
+	private VehicleService(VehicleDao vehicleDao, RentDao rentDao) {
 		this.vehicleDao = vehicleDao;
+		this.rentDao = rentDao;
 	}
 
 	public void validateVehicleData(Vehicle vehicle) throws ServiceException {
@@ -47,7 +48,7 @@ public class VehicleService {
 	}
 
 	public void update(Vehicle vehicle) throws ServiceException {
-		// validateVehicleData(vehicle);
+		validateVehicleData(vehicle);
 		try {
 			this.vehicleDao.update(vehicle);
 		} catch (DaoException e) {
@@ -58,7 +59,10 @@ public class VehicleService {
 
 	public void delete(Vehicle vehicle) throws ServiceException {
 		try {
-			this.vehicleDao.delete(vehicle);
+			for(Rent rent : rentDao.findResaByVehicleId(vehicle.getId())){
+				rentDao.delete(rent);
+			}
+			vehicleDao.delete(vehicle);
 		} catch (DaoException e) {
 			e.printStackTrace();
 			throw new ServiceException();

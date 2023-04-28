@@ -1,9 +1,8 @@
-package com.epf.rentmanager.servlet;
+package com.epf.rentmanager.ui.servlet;
 
-import com.epf.rentmanager.exception.DaoException;
 import com.epf.rentmanager.exception.ServiceException;
-import com.epf.rentmanager.model.Vehicle;
-import com.epf.rentmanager.service.VehicleService;
+import com.epf.rentmanager.service.ClientService;
+import com.epf.rentmanager.model.Client;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
@@ -12,36 +11,29 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.time.LocalDate;
+import java.io.IOException;
 
-@WebServlet("/vehicles/update")
-public class VehicleUpdateServlet extends HttpServlet {
+@WebServlet("/users/create")
+public class UserCreateServlet extends HttpServlet {
     @Autowired
-    VehicleService vehicleService;
-    private int vehicle_id;
+    ClientService clientService;
     @Override
     public void init() throws ServletException {
         super.init();
         SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
     }
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        this.vehicle_id = Integer.parseInt(request.getParameter("id"));
-        try {
-            request.setAttribute("vehicle", this.vehicleService.findById(vehicle_id));
-        } catch (ServiceException e) {
-            e.printStackTrace();
-        }
-        this.getServletContext().getRequestDispatcher("/WEB-INF/views/vehicles/update.jsp").forward(request, response);
+        this.getServletContext().getRequestDispatcher("/WEB-INF/views/users/create.jsp").forward(request, response);
     }
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         request.setCharacterEncoding("UTF-8");
-        Vehicle newVehicle = new Vehicle(vehicle_id, request.getParameter("constructor"),request.getParameter("model"),Integer.parseInt(request.getParameter("seats")));
+        Client newClient = new Client(0, request.getParameter("last_name"),request.getParameter("first_name"),request.getParameter("email"),LocalDate.parse(request.getParameter("birthday")));
         try {
-            vehicleService.update(newVehicle);
+            clientService.create(newClient);
         } catch (ServiceException e) {
             e.printStackTrace();
         }
-        response.sendRedirect("/rentmanager/vehicles");
+        response.sendRedirect("/rentmanager/users");
     }
 }

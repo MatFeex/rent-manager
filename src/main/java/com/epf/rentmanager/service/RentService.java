@@ -27,7 +27,7 @@ public class RentService {
         List<Rent> rents;
         try{
             rents = rentDao.findResaByVehicleId(rent.getVehicle().getId());
-            rents.remove(rent);
+            rents.remove(rentDao.findById(rent.getId()));
         } catch (DaoException e){
             throw new ServiceException("Impossible de trouver les autres réservations associées à ce véhicule.");
         }
@@ -85,7 +85,7 @@ public class RentService {
     }
 
     public void update(Rent rent) throws ServiceException {
-        // validateRentData(rent);
+        validateRentData(rent);
         try {
             this.rentDao.update(rent);
         } catch (DaoException e) {
